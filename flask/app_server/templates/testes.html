@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Super Header Pro</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            /* [Seu CSS anterior aqui] */
+            :root {
+                --amarelo: #FFD43B;
+                --azul: #2B3499;
+                --coral: #FF6B6B;
+                --branco: #FFFFFF;
+                --fundo: #F5F5F5;
+                --texto: #333333;
+                --sombra: rgba(0, 0, 0, 0.1);
+                
+                /* Dark Mode */
+                --dark-bg: #121212;
+                --dark-text: #F5F5F5;
+                --dark-header: #1E1E1E;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', sans-serif;
+                transition: background-color 0.3s, color 0.2s;
+            }
+
+            body {
+                background-color: var(--fundo);
+                color: var(--texto);
+                min-height: 200vh; /* Para testar o scroll */
+            }
+
+            body.dark-mode {
+                background-color: var(--dark-bg);
+                color: var(--dark-text);
+            }
+
+            /* Header */
+            header {
+                background-color: var(--azul);
+                padding: 1rem 2rem;
+                box-shadow: 0 4px 6px var(--sombra);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            .dark-mode header {
+                background-color: var(--dark-header);
+            }
+
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Logo */
+            .logo {
+                color: var(--amarelo);
+                font-size: 1.8rem;
+                font-weight: 700;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .logo-icon {
+                font-size: 2rem;
+            }
+
+            /* Navegação Principal */
+            nav ul {
+                display: flex;
+                gap: 1.5rem;
+                list-style: none;
+            }
+
+            nav a {
+                color: var(--branco);
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                position: relative;
+            }
+
+            .dark-mode nav a {
+                color: var(--dark-text);
+            }
+
+            nav a:hover {
+                color: var(--amarelo);
+                background-color: rgba(255, 212, 59, 0.1);
+            }
+
+            /* Botão CTA */
+            .cta-button {
+                background-color: var(--amarelo);
+                color: var(--azul);
+                padding: 0.7rem 1.5rem;
+                border-radius: 50px;
+                font-weight: 600;
+                transition: transform 0.3s ease;
+            }
+
+            .cta-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(255, 212, 59, 0.3);
+            }
+
+            /* Dropdown */
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: var(--branco);
+                min-width: 200px;
+                box-shadow: 0 8px 16px var(--sombra);
+                border-radius: 8px;
+                z-index: 1;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+
+            .dark-mode .dropdown-content {
+                background-color: var(--dark-header);
+                border: 1px solid #333;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .dropdown-content a {
+                color: var(--texto);
+                padding: 12px 16px;
+                display: block;
+            }
+
+            .dark-mode .dropdown-content a {
+                color: var(--dark-text);
+            }
+
+            .dropdown-content a:hover {
+                background-color: rgba(255, 212, 59, 0.2);
+            }
+
+            /* Menu Mobile */
+            .mobile-menu {
+                display: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 101;
+            }
+
+            /* Dark Mode Toggle */
+            .dark-mode-toggle {
+                background: none;
+                border: none;
+                color: var(--branco);
+                font-size: 1.2rem;
+                cursor: pointer;
+                margin-left: 1rem;
+            }
+
+            .dark-mode .dark-mode-toggle {
+                color: var(--amarelo);
+            }
+
+            /* Responsivo */
+            @media (max-width: 768px) {
+                nav ul {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100vh;
+                    background-color: var(--azul);
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 100;
+                }
+
+                .dark-mode nav ul {
+                    background-color: var(--dark-header);
+                }
+
+                nav ul.active {
+                    display: flex;
+                }
+
+                .mobile-menu {
+                    display: block;
+                    position: relative;
+                    z-index: 101;
+                }
+
+                .dropdown-content {
+                    position: static;
+                    box-shadow: none;
+                    display: none;
+                    opacity: 1;
+                    transform: none;
+                }
+
+                .dropdown:hover .dropdown-content {
+                    display: none;
+                }
+
+                .dropdown.active .dropdown-content {
+                    display: block;
+                    background-color: transparent;
+                }
+            }
+            /* 1. Search Bar Animada */
+            .search-container {
+                position: relative;
+                margin-right: 1rem;
+                transition: all 0.3s ease;
+            }
+
+            .search-input {
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                border: none;
+                border-radius: 50px;
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .search-input::placeholder {
+                color: transparent;
+            }
+
+            .search-input:focus {
+                width: 200px;
+                padding: 0 15px;
+                outline: none;
+                background: rgba(255, 255, 255, 0.3);
+                cursor: text;
+            }
+
+            .search-input:focus::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .search-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+
+            /* 2. Notificação Badge */
+            .notification-badge {
+                position: relative;
+                margin-right: 1rem;
+            }
+
+            .badge {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                background: var(--coral);
+                color: white;
+                border-radius: 50%;
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* 3. Seletor de Idioma */
+            .language-selector {
+                position: relative;
+                margin-right: 1rem;
+            }
+
+            .language-flag {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .language-dropdown {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            .dark-mode .language-dropdown {
+                background: var(--dark-header);
+                border: 1px solid #333;
+            }
+
+            .language-dropdown.active {
+                display: block;
+            }
+
+            .language-option {
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+            }
+
+            .language-option:hover {
+                background: rgba(255, 212, 59, 0.2);
+            }
+
+            /* 4. Progress Bar de Scroll */
+            .progress-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: transparent;
+                z-index: 1000;
+            }
+
+            .progress-bar {
+                height: 100%;
+                background: var(--amarelo);
+                width: 0%;
+                transition: width 0.1s ease;
+            }
+
+            .btn-foguete {
+            position: relative;
+            padding: 15px 30px;
+            background: var(--amarelo);
+            color: var(--azul);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* EFEITO DE DECOLAGEM */
+        .btn-foguete.decolando {
+            animation: decolar 2s forwards;
+            transform-origin: center bottom;
+        }
+
+        /* CHAMAS DO FOGUETE */
+        .chamas {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: var(--fogo);
+            border-radius: 50% 50% 20% 20%;
+            filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn-foguete:hover .chamas {
+            opacity: 0.7;
+        }
+
+        .btn-foguete.decolando .chamas {
+            animation: queimar 2s infinite;
+        }
+
+        /* ANIMAÇÕES */
+        @keyframes decolar {
+            0% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-100px) rotate(-5deg); }
+            100% { transform: translateY(-1000px) rotate(-10deg); }
+        }
+
+        @keyframes queimar {
+            0% { height: 40px; width: 60px; }
+            50% { height: 60px; width: 80px; }
+            100% { height: 40px; width: 60px; }
+        }
+        </style>
+    </head>
+    <body>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <header>
+            <div class="header-container">
+                <a href="/" class="logo">
+                    <span class="logo-icon">✨</span>
+                    <span>LogoMarca</span>
+                </a>
+
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="#">Início</a></li>
+                        <li class="dropdown">
+                            <a href="#">Serviços ▾</a>
+                            <div class="dropdown-content">
+                                <a href="#">Web Design</a>
+                                <a href="#">Desenvolvimento</a>
+                                <a href="#">SEO</a>
+                            </div>
+                        </li>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Contato</a></li>
+                        
+                        <!-- Novos Componentes -->
+                        <li class="search-container">
+                            <input type="text" class="search-input" placeholder="Pesquisar...">
+                            <i class="fas fa-search search-icon"></i>
+                        </li>
+                        
+                        <li class="notification-badge">
+                            <i class="fas fa-bell" style="font-size: 1.2rem;"></i>
+                            <span class="badge">3</span>
+                        </li>
+                        
+                        <li class="language-selector">
+                            <img src="https://flagcdn.com/w20/br.png" class="language-flag" id="currentFlag">
+                            <div class="language-dropdown" id="languageDropdown">
+                                <div class="language-option" data-lang="pt" data-flag="br">
+                                    <img src="https://flagcdn.com/w20/br.png" class="language-flag">
+                                    <span>Português</span>
+                                </div>
+                                <div class="language-option" data-lang="en" data-flag="us">
+                                    <img src="https://flagcdn.com/w20/us.png" class="language-flag">
+                                    <span>English</span>
+                                </div>
+                                <div class="language-option" data-lang="es" data-flag="es">
+                                    <img src="https://flagcdn.com/w20/es.png" class="language-flag">
+                                    <span>Español</span>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <button class="dark-mode-toggle" id="darkModeToggle">🌓</button>
+                            <a href="#" class="cta-button">Login</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="mobile-menu" id="mobileMenu">☰</div>
+            </div>
+        </header>
+
+        <main style="height: 200vh; padding-top: 2rem;">
+            <h1 style="text-align: center;">Conteúdo Principal</h1>
+
+            <button class="btn-foguete" id="foguete">
+                Clique e Decole!
+                <div class="chamas"></div>
+            </button>
+        </main>
+
+        <script>
+            // [Seu JavaScript anterior aqui]
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                
+                // Salva preferência no localStorage
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDark);
+                
+                // Altera ícone
+                darkModeToggle.textContent = isDark ? '🌞' : '🌙';
+            });
+
+            // Verifica preferência salva
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '🌞';
+            }
+
+            // Menu Mobile
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navMenu = document.getElementById('nav-menu');
+
+            mobileMenu.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileMenu.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+            });
+
+            // Dropdown no Mobile
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        this.classList.toggle('active');
+                    }
+                });
+            });
+
+            // Header no Scroll
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // 1. Fechar menu mobile ao clicar em um link
+            document.querySelectorAll('#nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        mobileMenu.textContent = '☰';
+                    }
+                });
+            });
+
+            // 2. Dropdown que fecha ao clicar fora
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown') && window.innerWidth > 768) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            });
+
+            // 3. Efeito "scroll suave" para âncoras
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            // 1. Search Bar Animada
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('focus', () => {
+                document.querySelector('.search-icon').style.opacity = '0';
+            });
+            
+            searchInput.addEventListener('blur', () => {
+                if (!searchInput.value) {
+                    document.querySelector('.search-icon').style.opacity = '1';
+                    searchInput.style.width = '40px';
+                }
+            });
+
+            // 2. Notificação Badge (Simulando notificações)
+            setInterval(() => {
+                const badge = document.querySelector('.badge');
+                badge.textContent = Math.floor(Math.random() * 5) + 1;
+            }, 5000);
+
+            // 3. Seletor de Idioma
+            const currentFlag = document.getElementById('currentFlag');
+            const languageDropdown = document.getElementById('languageDropdown');
+            
+            currentFlag.addEventListener('click', () => {
+                languageDropdown.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const flag = option.getAttribute('data-flag');
+                    const lang = option.getAttribute('data-lang');
+                    
+                    currentFlag.src = `https://flagcdn.com/w20/${flag}.png`;
+                    languageDropdown.classList.remove('active');
+                    alert(`Idioma alterado para: ${lang.toUpperCase()}`);
+                });
+            });
+
+            // 4. Progress Bar de Scroll
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+                
+                document.getElementById('progressBar').style.width = `${progress}%`;
+            });
+
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.language-selector')) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
+
+            const botao = document.getElementById('foguete');
+
+        // 1. DECOLAGEM AO CLICAR
+        botao.addEventListener('click', function() {
+            this.classList.add('decolando');
+            
+            // Efeito sonoro (opcional)
+            const som = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-rocket-whoosh-1714.mp3');
+            som.play();
+            
+            // 2. RESET APÓS ANIMAÇÃO
+            setTimeout(() => {
+                this.classList.remove('decolando');
+                alert('Foguete lançado com sucesso! 🚀');
+            }, 2000);
+        });
+
+        // 3. EFEITO EXTRA: RATATATATATÁ!
+        botao.addEventListener('mousedown', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+
+        botao.addEventListener('mouseup', function() {
+            this.style.transform = 'scale(1)';
+        });
+        </script>
+    </body>
+</html>
